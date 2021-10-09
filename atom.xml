@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>LanceBlog</title>
+  
+  
+  <link href="http://example.com/atom.xml" rel="self"/>
+  
+  <link href="http://example.com/"/>
+  <updated>2021-10-08T09:20:30.334Z</updated>
+  <id>http://example.com/</id>
+  
+  <author>
+    <name>Lance</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JWT揭秘</title>
+    <link href="http://example.com/2021/10/08/JWT%E6%8F%AD%E7%A7%98/"/>
+    <id>http://example.com/2021/10/08/JWT%E6%8F%AD%E7%A7%98/</id>
+    <published>2021-10-08T09:06:25.000Z</published>
+    <updated>2021-10-08T09:20:30.334Z</updated>
+    
+    <content type="html"><![CDATA[<p>征文</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;征文&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    <category term="web相关" scheme="http://example.com/categories/web%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="JWT" scheme="http://example.com/tags/JWT/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>贷前规则引擎后台管理接口</title>
+    <link href="http://example.com/2021/08/03/%E8%B4%B7%E5%89%8D%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E6%8E%A5%E5%8F%A3/"/>
+    <id>http://example.com/2021/08/03/%E8%B4%B7%E5%89%8D%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E6%8E%A5%E5%8F%A3/</id>
+    <published>2021-08-03T07:46:16.000Z</published>
+    <updated>2021-10-08T08:32:36.742Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-通讯协议"><a href="#1-通讯协议" class="headerlink" title="1.通讯协议"></a>1.通讯协议</h3><ul><li><pre><code>Mesh HTTP Json POST</code></pre></li><li>【APPID】 risksystem.xrule_engine.xrule_manager</li></ul><h3 id="2-规则流管理"><a href="#2-规则流管理" class="headerlink" title="2.规则流管理"></a>2.规则流管理</h3><h4 id="2-1-规则流发布提交"><a href="#2-1-规则流发布提交" class="headerlink" title="2.1 规则流发布提交"></a>2.1 规则流发布提交</h4><ul><li><p>URL</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/api/v1.0/flow/publish</span><br></pre></td></tr></table></figure></li><li><p>请求参数</p></li></ul><table><thead><tr><th>字段</th><th>类型</th><th>说明</th><th>是否必须</th><th>备注</th></tr></thead><tbody><tr><td>req_id</td><td>string</td><td>流水号</td><td>是</td><td>唯一流水号</td></tr><tr><td>product_id</td><td>int</td><td>产品ID</td><td>是</td><td></td></tr><tr><td>scene_id</td><td>int</td><td>场景ID</td><td>是</td><td></td></tr><tr><td>verson</td><td>string</td><td>规则流版本</td><td>是</td><td></td></tr><tr><td>env_type</td><td>int</td><td>环境类型</td><td>是</td><td>1为线上环境，2为预发布环境</td></tr><tr><td>content</td><td>string</td><td>规则流内容</td><td>是</td><td>json串</td></tr></tbody></table><ul><li>响应数据</li></ul><table><thead><tr><th>字段</th><th>类型</th><th>说明</th><th>是否必须</th><th>备注</th></tr></thead><tbody><tr><td>err_msg</td><td>string</td><td>错误描述</td><td>是</td><td></td></tr><tr><td>version</td><td>string</td><td>服务版本</td><td>是</td><td></td></tr><tr><td>content</td><td>dict</td><td>响应内容</td><td>是</td><td></td></tr><tr><td>err_code</td><td>int</td><td>错误码</td><td>是</td><td>0为请求成功，非0为请求异常</td></tr></tbody></table><p>  <em>content字段说明</em></p>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&#x27;status&#x27;</span>: <span class="number">1</span>, <span class="comment"># 0提交失败，1提交成功，3产品与场景不匹配，4规则流语法错误，5重复提交发布过程中</span></span><br><span class="line">  <span class="string">&#x27;task_id&#x27;</span>: <span class="string">&#x27;4be1a192-ad00-4bd4-94e4-d51748b9a96a&#x27;</span> <span class="comment"># 用于跟踪当前发布的流水号</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h4 id="2-2-规则流发布状态"><a href="#2-2-规则流发布状态" class="headerlink" title="2.2 规则流发布状态"></a>2.2 规则流发布状态</h4><ul><li><p>URL</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/api/v1.0/flow/publish_status</span><br></pre></td></tr></table></figure></li><li><p>请求参数</p><table><thead><tr><th>字段</th><th>类型</th><th>说明</th><th>是否必须</th><th>备注</th></tr></thead><tbody><tr><td>req_id</td><td>string</td><td>流水号</td><td>是</td><td>唯一流水号</td></tr><tr><td>task_id</td><td>string</td><td>发布流水号</td><td>是</td><td></td></tr></tbody></table></li><li><p>响应数据</p></li></ul><table><thead><tr><th>字段</th><th>类型</th><th>说明</th><th>是否必须</th><th>备注</th></tr></thead><tbody><tr><td>err_code</td><td>int</td><td>错误码</td><td>是</td><td>0为请求成功，非0为请求异常</td></tr><tr><td>err_msg</td><td>string</td><td>错误描述</td><td>是</td><td></td></tr><tr><td>version</td><td>string</td><td>服务版本</td><td>是</td><td></td></tr><tr><td>content</td><td>dict</td><td>响应内容</td><td>是</td><td></td></tr></tbody></table><p>  <em>conten字段说明</em></p>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&#x27;status&#x27;</span>: <span class="number">1</span>, <span class="comment"># 0发布失败，1上线成功，3发布中，4已下线，5未查询到相关记录</span></span><br><span class="line">  <span class="string">&#x27;time&#x27;</span>: <span class="string">&#x27;2020-02-24 12:12:07&#x27;</span> <span class="comment"># 事件时间 格式：%Y-%m-%d %H:%M:%S</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><h4 id="2-3-规则流历史发布查询"><a href="#2-3-规则流历史发布查询" class="headerlink" title="2.3 规则流历史发布查询"></a>2.3 规则流历史发布查询</h4><ul><li><p>URL</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/api/v1.0/flow/query</span><br></pre></td></tr></table></figure></li><li><p>请求参数</p></li></ul><table><thead><tr><th>字段</th><th>类型</th><th>说明</th><th>是否必须</th><th>备注</th></tr></thead><tbody><tr><td>req_id</td><td>string</td><td>流水号</td><td>是</td><td>唯一流水号</td></tr><tr><td>product_id</td><td>int</td><td>产品ID</td><td>是</td><td></td></tr><tr><td>scene_id</td><td>int</td><td>场景ID</td><td>是</td><td></td></tr><tr><td>verson</td><td>string</td><td>规则流版本</td><td>是</td><td></td></tr></tbody></table><ul><li>响应数据</li></ul><table><thead><tr><th>字段</th><th>类型</th><th>说明</th><th>是否必须</th><th>备注</th></tr></thead><tbody><tr><td>err_code</td><td>int</td><td>错误码</td><td>是</td><td>0为请求成功，非0为请求异常</td></tr><tr><td>err_msg</td><td>string</td><td>错误描述</td><td>是</td><td></td></tr><tr><td>version</td><td>string</td><td>服务版本</td><td>是</td><td></td></tr><tr><td>content</td><td>list</td><td>响应内容</td><td>是</td><td></td></tr></tbody></table><p>  <em>conten字段说明</em></p>  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">&#x27;status&#x27;</span>: <span class="number">1</span>, <span class="comment"># 0发布失败，1上线成功，3发布中，4已下线，5未查询到相关记录</span></span><br><span class="line">    <span class="string">&#x27;time&#x27;</span>: <span class="string">&#x27;2020-02-24 12:12:07&#x27;</span>, <span class="comment"># 事件时间 格式：%Y-%m-%d %H:%M:%S</span></span><br><span class="line">    <span class="string">&#x27;env_type&#x27;</span>: <span class="number">2</span>, <span class="comment">#发布环境</span></span><br><span class="line">    <span class="string">&#x27;task_id&#x27;</span>: <span class="string">&#x27;78c85e91-8c7c-499e-8df3-1466a58192b6&#x27;</span> <span class="comment"># 发布的流水号</span></span><br><span class="line">    <span class="string">&#x27;version&#x27;</span>:</span><br><span class="line">    <span class="string">&#x27;success_node&#x27;</span>:[<span class="string">&#x27;127.0.0.1&#x27;</span>]</span><br><span class="line">    <span class="string">&#x27;failed_node&#x27;</span>:[]</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">&#x27;status&#x27;</span>: <span class="number">1</span>, <span class="comment"># 0发布失败，1上线成功，3发布中，4已下线，5未查询到相关记录</span></span><br><span class="line">    <span class="string">&#x27;time&#x27;</span>: <span class="string">&#x27;2020-02-24 15:45:09&#x27;</span>, <span class="comment"># 事件时间 格式：%Y-%m-%d %H:%M:%S</span></span><br><span class="line">    <span class="string">&#x27;env_type&#x27;</span>: <span class="number">1</span>, <span class="comment">#发布环境</span></span><br><span class="line">    <span class="string">&#x27;task_id&#x27;</span>: <span class="string">&#x27;4be1a192-ad00-4bd4-94e4-d51748b9a96a&#x27;</span> <span class="comment"># 发布的流水号</span></span><br><span class="line">    <span class="string">&#x27;success_node&#x27;</span>:[<span class="string">&#x27;127.0.0.1&#x27;</span>]</span><br><span class="line">    <span class="string">&#x27;failed_node&#x27;</span>:[]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure><h4 id="2-4-规则流验证"><a href="#2-4-规则流验证" class="headerlink" title="2.4 规则流验证"></a>2.4 规则流验证</h4><ul><li><p>URL</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/api/v1.0/flow/check</span><br></pre></td></tr></table></figure></li><li><p>请求参数</p></li></ul><table><thead><tr><th>字段</th><th>类型</th><th>说明</th><th>是否必须</th><th>备注</th></tr></thead><tbody><tr><td>req_id</td><td>string</td><td>流水号</td><td>是</td><td>唯一流水号</td></tr><tr><td>product_id</td><td>int</td><td>产品ID</td><td>是</td><td></td></tr><tr><td>scene_id</td><td>int</td><td>场景ID</td><td>是</td><td></td></tr><tr><td>verson</td><td>string</td><td>规则流版本</td><td>是</td><td></td></tr></tbody></table><ul><li>响应数据</li></ul><table><thead><tr><th>字段</th><th>类型</th><th>说明</th><th>是否必须</th><th>备注</th></tr></thead><tbody><tr><td>err_code</td><td>int</td><td>错误码</td><td>是</td><td></td></tr><tr><td>err_msg</td><td>string</td><td>错误描述</td><td>是</td><td></td></tr><tr><td>version</td><td>string</td><td>服务版本</td><td>是</td><td></td></tr></tbody></table><p>  <em>err_code字段说明</em></p><table><thead><tr><th>err_code</th><th>说明</th></tr></thead><tbody><tr><td>0</td><td>规则流正确</td></tr><tr><td>&lt; 0</td><td>服务异常</td></tr><tr><td>1</td><td>无版本号     ‘’</td></tr><tr><td>2</td><td>空节点 没有name</td></tr><tr><td>3</td><td>节点名重复 name:uniq</td></tr><tr><td>4</td><td>节点定义未被使用</td></tr><tr><td>5</td><td>边无定义action 没有传None</td></tr><tr><td>6</td><td>无开始节点  无</td></tr><tr><td>7</td><td>多个初始节点 多个图</td></tr><tr><td>8</td><td>无未命中输出线 所有边</td></tr><tr><td>9</td><td>模块和流END节点 无 web限制最多一个END</td></tr><tr><td>10</td><td>相同src, 相同action不同输出节点   无</td></tr><tr><td>11</td><td>节点的输出线无覆盖规则本身执行操作 包含模块</td></tr><tr><td>12</td><td>决策流有环</td></tr></tbody></table><h3 id="3-常量操作"><a href="#3-常量操作" class="headerlink" title="3.常量操作"></a>3.常量操作</h3><h4 id="3-1-常量操作"><a href="#3-1-常量操作" class="headerlink" title="3.1 常量操作"></a>3.1 常量操作</h4><ul><li><p>URL</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/api/v1.0/constant/operate</span><br></pre></td></tr></table></figure></li><li><p>请求参数</p></li></ul><table><thead><tr><th>字段</th><th>类型</th><th>说明</th><th>是否必须</th><th>备注</th></tr></thead><tbody><tr><td>req_id</td><td>string</td><td>流水号</td><td>是</td><td>唯一流水号</td></tr><tr><td>constant_en_name</td><td>string</td><td>变量名称</td><td>是</td><td></td></tr><tr><td>constant_type</td><td>string</td><td>变量类型</td><td>是</td><td></td></tr><tr><td>constant_value</td><td>string</td><td>变量参数</td><td>是</td><td>json串，数字字符串原样传输</td></tr></tbody></table><ul><li>响应数据</li></ul><table><thead><tr><th>字段</th><th>类型</th><th>说明</th><th>是否必须</th><th>备注</th></tr></thead><tbody><tr><td>err_code</td><td>int</td><td>错误码</td><td>是</td><td>0为请求成功，非0为请求异常</td></tr><tr><td>err_msg</td><td>string</td><td>错误描述</td><td>是</td><td></td></tr></tbody></table>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;1-通讯协议&quot;&gt;&lt;a href=&quot;#1-通讯协议&quot; class=&quot;headerlink&quot; title=&quot;1.通讯协议&quot;&gt;&lt;/a&gt;1.通讯协议&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;pre&gt;&lt;code&gt;Mesh HTTP Json POST
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/l</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+</feed>
