@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://l-ance.github.io/2021/11/10/gunicorn%E7%89%88%E6%9C%AC%E9%97%AE%E9%A2%98%E5%AF%BC%E8%87%B4%E6%9C%8D%E5%8A%A1%E5%BC%82%E5%B8%B8/</loc>
+    
+    <lastmod>2021-11-10</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://l-ance.github.io/links/index.html</loc>
     
     <lastmod>2021-11-08</lastmod>
@@ -67,7 +74,7 @@
 
   <url>
     <loc>https://l-ance.github.io/</loc>
-    <lastmod>2021-11-09</lastmod>
+    <lastmod>2021-11-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -75,7 +82,14 @@
   
   <url>
     <loc>https://l-ance.github.io/tags/JWT/</loc>
-    <lastmod>2021-11-09</lastmod>
+    <lastmod>2021-11-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://l-ance.github.io/tags/gunicorn/</loc>
+    <lastmod>2021-11-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -84,7 +98,7 @@
   
   <url>
     <loc>https://l-ance.github.io/categories/web%E7%9B%B8%E5%85%B3/</loc>
-    <lastmod>2021-11-09</lastmod>
+    <lastmod>2021-11-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
