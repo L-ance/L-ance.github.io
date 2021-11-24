@@ -58,14 +58,14 @@
   </url>
   
   <url>
-    <loc>https://l-ance.github.io/categories/index.html</loc>
+    <loc>https://l-ance.github.io/about/index.html</loc>
     
     <lastmod>2021-11-08</lastmod>
     
   </url>
   
   <url>
-    <loc>https://l-ance.github.io/about/index.html</loc>
+    <loc>https://l-ance.github.io/categories/index.html</loc>
     
     <lastmod>2021-11-08</lastmod>
     
@@ -88,7 +88,7 @@
 
   <url>
     <loc>https://l-ance.github.io/</loc>
-    <lastmod>2021-11-10</lastmod>
+    <lastmod>2021-11-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -96,21 +96,21 @@
   
   <url>
     <loc>https://l-ance.github.io/tags/JWT/</loc>
-    <lastmod>2021-11-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://l-ance.github.io/tags/gunicorn/</loc>
-    <lastmod>2021-11-10</lastmod>
+    <lastmod>2021-11-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://l-ance.github.io/tags/Promethus/</loc>
-    <lastmod>2021-11-10</lastmod>
+    <lastmod>2021-11-24</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://l-ance.github.io/tags/gunicorn/</loc>
+    <lastmod>2021-11-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -119,14 +119,14 @@
   
   <url>
     <loc>https://l-ance.github.io/categories/web%E7%9B%B8%E5%85%B3/</loc>
-    <lastmod>2021-11-10</lastmod>
+    <lastmod>2021-11-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://l-ance.github.io/categories/%E7%9B%91%E6%8E%A7%E7%9B%B8%E5%85%B3/</loc>
-    <lastmod>2021-11-10</lastmod>
+    <lastmod>2021-11-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
