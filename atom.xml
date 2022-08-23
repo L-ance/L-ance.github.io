@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-10-08T09:20:30.334Z</updated>
+  <updated>2022-08-23T08:34:47.442Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -17,19 +17,40 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>asynq:一个由 Go 开发的轻量级的异步定时任务系统</title>
+    <link href="http://example.com/2022/08/23/asynq:%E4%B8%80%E4%B8%AA%E7%94%B1%20Go%20%E5%BC%80%E5%8F%91%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%9A%84%E5%BC%82%E6%AD%A5%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E7%B3%BB%E7%BB%9F/"/>
+    <id>http://example.com/2022/08/23/asynq:%E4%B8%80%E4%B8%AA%E7%94%B1%20Go%20%E5%BC%80%E5%8F%91%E7%9A%84%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%9A%84%E5%BC%82%E6%AD%A5%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E7%B3%BB%E7%BB%9F/</id>
+    <published>2022-08-23T08:15:31.000Z</published>
+    <updated>2022-08-23T08:34:47.442Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go get -u github.com/hibiken/asynq</span><br><span class="line">go get -u github.com/hibiken/asynq/tools/asynqmon</span><br></pre></td></tr></table></figure><h3 id="2-使用"><a href="#2-使用" class="headerlink" title="2.使用"></a>2.使用</h3><p>producer.go将创建并定时要由consumer异步处理的任务。</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建asynq连接redis </span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AsynqServer</span><span class="params">()</span></span> &#123;</span><br><span class="line">global.AsynqRedis = asynq.NewServer(asynq.RedisClientOpt&#123;</span><br><span class="line">Addr:     youraddr,</span><br><span class="line">Password: yourpassward, <span class="comment">// no password set</span></span><br><span class="line">DB:       yourdb,       <span class="comment">// use default DB</span></span><br><span class="line">&#125;, asynq.Config&#123;</span><br><span class="line">Concurrency: <span class="number">50</span>,    <span class="comment">// 并发树</span></span><br><span class="line">Queues: <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>&#123;</span><br><span class="line"><span class="string">&quot;task_queue&quot;</span>: <span class="number">1</span>,     <span class="comment">// 队列分配处理时间，此处我只用了一个</span></span><br><span class="line">&#125;,</span><br><span class="line">RetryDelayFunc: <span class="function"><span class="keyword">func</span><span class="params">(n <span class="keyword">int</span>, e error, t *asynq.Task)</span> <span class="title">time</span>.<span class="title">Duration</span></span> &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="number">5</span> * time.Second <span class="comment">// 间隔5秒重试</span></span><br><span class="line">&#125;&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">AsyncConsumer</span><span class="params">()</span></span> &#123;</span><br><span class="line">mux := asynq.NewServeMux()</span><br><span class="line">mux.HandleFunc(<span class="string">&quot;task_queue&quot;</span>, HandleFraud) <span class="comment">//  HandleFraud 处理任务队列函数</span></span><br><span class="line"><span class="keyword">if</span> err := global.AsynqRedis.Run(mux); err != <span class="literal">nil</span> &#123;</span><br><span class="line">fmt.Println(<span class="string">&quot;启动正常规则流任务失败&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fmt.Println(<span class="string">&quot;启动正常规则流任务成功&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>consumer.go 将处理producer创建的任务。</p><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//// 即时消费</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Test_Enqueue</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">payload, _ := json.Marshal(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">interface</span>&#123;&#125;&#123;<span class="string">&quot;uniq_id&quot;</span>: <span class="string">&quot;123456&quot;</span>, <span class="string">&quot;policy_name&quot;</span>: <span class="string">&quot;xw&quot;</span>&#125;)</span><br><span class="line">task := asynq.NewTask(<span class="string">&quot;risk:xw:task_queue&quot;</span>, payload, asynq.Retention(<span class="number">3</span>*time.Hour), asynq.MaxRetry(<span class="number">20</span>), asynq.TaskID(<span class="string">&quot;1111&quot;</span>))</span><br><span class="line">    <span class="comment">// type: risk:xw:task_queue    asynq.Retention(3*time.Hour) 结果留存3个小时  asynq.MaxRetry(20) 重试次数20  asynq.TaskID(&quot;1111&quot;) 自定义任务ID</span></span><br><span class="line">res, err := c.Enqueue(task, asynq.Queue(<span class="string">&quot;risk:xw:task_queue&quot;</span>))</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">t.Errorf(<span class="string">&quot;could not enqueue task: %v&quot;</span>, err)</span><br><span class="line">t.FailNow()</span><br><span class="line">&#125;</span><br><span class="line">fmt.Printf(<span class="string">&quot;Enqueued Result: %+v\n&quot;</span>, res)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="3-asynqmon-监控"><a href="#3-asynqmon-监控" class="headerlink" title="3.asynqmon 监控"></a>3.asynqmon 监控</h3><h4 id="3-1安装在github-https-github-com-hibiken-asynqmon"><a href="#3-1安装在github-https-github-com-hibiken-asynqmon" class="headerlink" title="3.1安装在github https://github.com/hibiken/asynqmon"></a>3.1安装在github <a href="https://github.com/hibiken/asynqmon">https://github.com/hibiken/asynqmon</a></h4><h4 id="3-2-使用"><a href="#3-2-使用" class="headerlink" title="3.2 使用"></a>3.2 使用</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asynqmon stats</span><br></pre></td></tr></table></figure><p>你应该能看到，有一个任务Enqueued状态，另一个在Scheduled状态。</p><p>注意：如需了解每种状态的含义，请参阅Wiki页面上<a href="https://github.com/hibiken/asynq/wiki/Life-of-a-Task">Life of Task</a>。</p><p>让我们运行asynqmon与watch命令，以便我们能够连续运行的命令看到的变化。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch -n 3 asynqmon stats # Runs `asynqmon stats` every 3 seconds</span><br></pre></td></tr></table></figure><p>详情请参考：Asyqn-<a href="https://github.com/hibiken/asynq">https://github.com/hibiken/asynq</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;1-安装&quot;&gt;&lt;a href=&quot;#1-安装&quot; class=&quot;headerlink&quot; title=&quot;1 安装&quot;&gt;&lt;/a&gt;1 安装&lt;/h3&gt;&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;</summary>
+      
+    
+    
+    
+    
+    <category term="asynq" scheme="http://example.com/tags/asynq/"/>
+    
+  </entry>
+  
+  <entry>
     <title>JWT揭秘</title>
     <link href="http://example.com/2021/10/08/JWT%E6%8F%AD%E7%A7%98/"/>
     <id>http://example.com/2021/10/08/JWT%E6%8F%AD%E7%A7%98/</id>
     <published>2021-10-08T09:06:25.000Z</published>
-    <updated>2021-10-08T09:20:30.334Z</updated>
+    <updated>2022-08-23T08:02:13.116Z</updated>
     
-    <content type="html"><![CDATA[<p>征文</p>]]></content>
+    <content type="html"><![CDATA[<h3 id="docker简介"><a href="#docker简介" class="headerlink" title="docker简介"></a>docker简介</h3>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;征文&lt;/p&gt;
-</summary>
+    <summary type="html">&lt;h3 id=&quot;docker简介&quot;&gt;&lt;a href=&quot;#docker简介&quot; class=&quot;headerlink&quot; title=&quot;docker简介&quot;&gt;&lt;/a&gt;docker简介&lt;/h3&gt;</summary>
       
     
     
